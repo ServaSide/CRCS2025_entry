@@ -1,0 +1,13 @@
+Stuff to include in the game:
+    - Farming mechaincs  
+    - Particle systems
+    - SFX
+Stuff to include in the idea:
+    - Mushrooms
+    - some kind of dystopia
+
+Concept:
+
+Backstory:
+
+Gameplay Loop:
