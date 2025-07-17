@@ -6,8 +6,19 @@ Stuff to include in the idea:
     - Mushrooms
     - some kind of dystopia
 
-Concept:
+Theme: Cost
 
-Backstory:
+Concept:
+    A farming survival game with mushroom breeding mechaincs
+
+Backstory: 
+    You are a young guy that crashed on an alien planet MYCORIA 67 and you lost memory, you have to survive farming mushrooms/crops and finding water 
 
 Gameplay Loop:
+    1. you find seeds
+    2. you grow seeds
+    3. you harvest and eat to not starve
+    4. you get water
+    5. you clean and drink the water to not dry out to death
+    6. replant and automate (maybe)
+    7. repeat
