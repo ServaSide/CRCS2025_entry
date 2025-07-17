@@ -1,4 +1,3 @@
-import { Player } from './player.js';
 import { World } from './world.js';
 
 class Game {
@@ -15,15 +14,19 @@ class Game {
         window.addEventListener('keydown', this.keydown.bind(this));
         window.addEventListener('keyup', this.keyup.bind(this));
 
+        window.addEventListener('mousedown', this.mousedown.bind(this));
+        window.addEventListener('mouseup', this.mouseup.bind(this));
+        window.addEventListener('mousemove', this.mousemove.bind(this));
+
+
         this.world = new World(this.ctx);
-        this.player = new Player(this.ctx);
 
         this.loop();
     }
 
     mousedown(e) { this.mouse.btn = e.button; } 
     mouseup(e) { this.mouse.btn = -1; } 
-    mousemove(e) { this.mouse.x = e.pageX; this.mouse.y = e.pageY; } 
+    mousemove(e) { this.mouse.x = e.pageX/2; this.mouse.y = e.pageY/2; } 
 
     keydown(e) { this.keys[e.key] = true; }
     keyup(e) { this.keys[e.key] = false; }
@@ -43,12 +46,10 @@ class Game {
 
     update() {
         this.world.update(this.dt, this.keys, this.mouse);
-        this.player.update(this.dt, this.keys, this.mouse);
     }
 
     render() {
-        this.world.render();
-        this.player.render();
+        this.world.render(this.mouse);
     }
 }
 

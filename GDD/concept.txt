@@ -9,7 +9,7 @@ Stuff to include in the idea:
 Theme: Cost
 
 Concept:
-    A farming survival game with mushroom breeding mechaincs
+    A farming survival game with mushroom breeding mechaincs (F.A.L.L.O.W = Fragmented Agricultural Lifeform Logistics & Operations Workflow)
 
 Backstory: 
     You are a young guy that crashed on an alien planet MYCORIA 67 and you lost memory, you have to survive farming mushrooms/crops and finding water 
