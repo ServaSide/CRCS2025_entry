@@ -4,6 +4,9 @@ export class Player {
         this.sprite = new Image();
         this.sprite.src = "data/graphics/player.png";
 
+        this.bar = new Image();
+        this.bar.src = "data/graphics/bar.png";
+
         this.animCounter = 0;
         this.direction = 0;
         this.isRunning = false; 
@@ -16,6 +19,9 @@ export class Player {
         
         this.screenX = 0;
         this.screenY = 0;
+
+        this.stamina = 100;
+        this.maxStamina = 100;
     }
 
     render() {
@@ -32,6 +38,25 @@ export class Player {
         );
     }
 
+    renderUI() {
+        this.ctx.fillStyle = 'green';
+        this.ctx.fillRect(
+            4, 4,
+            this.stamina, 6
+        );
+        this.ctx.fillStyle = 'lime';
+        
+        this.ctx.fillRect(
+            4, 5,
+            this.stamina, 2
+        );
+        
+        this.ctx.drawImage(
+            this.bar,
+            4, 4
+        );
+    }
+
     update(dt, keys, mouse) {
         if(this.isRunning) {
             this.animCounter += dt * 8;
@@ -39,6 +64,9 @@ export class Player {
 
         const moveSpeed = dt * 2;
         let moved = false;
+
+        let lWorldX = this.worldX;
+        let lWorldY = this.worldY;
 
         if(keys['s']) {
             this.worldY += moveSpeed;
@@ -63,6 +91,16 @@ export class Player {
             this.worldY -= moveSpeed;
             this.direction = 0;
             moved = true;
+        }
+
+        let dx = this.worldX-lWorldX;
+        let dy = this.worldY-lWorldY;
+
+        let dist = Math.sqrt(dx*dx + dy*dy);
+
+        if(dist != 0) {
+            this.worldX = lWorldX+(dx/dist)*dt*5;
+            this.worldY = lWorldY+(dy/dist)*dt*5;
         }
 
         this.isRunning = moved;

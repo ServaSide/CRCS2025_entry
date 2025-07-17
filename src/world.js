@@ -31,6 +31,7 @@ export class World {
             walk: new Audio("data/walk.wav"),
         };
 
+        this.snd.walk.volume = 0.5;
     }
 
     update(dt, keys, mouse) {
@@ -66,10 +67,11 @@ export class World {
                     let tile = ch[localY][localX];
                     
                     if (tile.tree) {
-                        if (tile.hp > 0) {
+                        if (tile.hp > 0 && this.player.stamina > 0) {
                             tile.hp--;
                             this.snd.chop.play();
                             tile.shaking = 2;
+                            this.player.stamina --;
                         } else {
                             tile.tree = false;
                             this.snd.fell.play();
@@ -174,6 +176,8 @@ export class World {
 
         // Reset mouse button state after processing
         this.mouse.btn = -1;
+        
+        this.player.renderUI();
     }
 
     renderChunkTiles(cx, cy, chunk) {
