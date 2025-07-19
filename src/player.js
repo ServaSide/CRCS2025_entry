@@ -1,11 +1,13 @@
+import { PlayerStats } from "./playerStats.js";
+
 export class Player {
     constructor(ctx) {
         this.ctx = ctx;
         this.sprite = new Image();
         this.sprite.src = "data/graphics/player.png";
 
-        this.bar = new Image();
-        this.bar.src = "data/graphics/bar.png";
+        this.gameOver = new Image();
+        this.gameOver.src = "data/graphics/gameOver.png";
 
         this.animCounter = 0;
         this.direction = 0;
@@ -20,44 +22,38 @@ export class Player {
         this.screenX = 0;
         this.screenY = 0;
 
-        this.stamina = 100;
-        this.maxStamina = 100;
+        this.stats = new PlayerStats(ctx, 100);
+
+        this.dead = false;
     }
 
-    render() {
-        this.screenX = (this.worldX - this.worldY) * (32 / 2) - this.cx;
-        this.screenY = (this.worldX + this.worldY) * (16 / 2) - this.cy;
-
+    renderAtPosition(screenX, screenY) {
         this.ctx.drawImage(
             this.sprite,
             Math.floor(this.animCounter)%2*32, 
             this.direction*64, 
             32, 64,
-            this.screenX, this.screenY - 48,
+            screenX - 16, screenY - 32,
             32, 64
         );
     }
 
     renderUI() {
-        this.ctx.fillStyle = 'green';
-        this.ctx.fillRect(
-            4, 4,
-            this.stamina, 6
-        );
-        this.ctx.fillStyle = 'lime';
-        
-        this.ctx.fillRect(
-            4, 5,
-            this.stamina, 2
-        );
-        
-        this.ctx.drawImage(
-            this.bar,
-            4, 4
-        );
+        this.stats.render();
+        if(this.dead) {
+            this.ctx.drawImage(this.gameOver, -48, 0, 648, 450);
+        }
     }
 
     update(dt, keys, mouse) {
+        if(this.stats.hunger > dt*0.6) this.stats.hunger -= dt*0.6;
+        else this.stats.hp -= dt*3;
+        if(this.stats.thirst > dt*0.7) this.stats.thirst -= dt*0.7;
+        else this.stats.hp -= dt*3;
+        if(this.stats.hp <= 0) {
+            this.dead = true;
+        }
+
         if(this.isRunning) {
             this.animCounter += dt * 8;
         }
@@ -110,7 +106,6 @@ export class Player {
 
         const centerX = this.ctx.canvas.width / 4;
         const centerY = this.ctx.canvas.height / 4;
-        const margin = 100;
 
         const desiredCX = (this.worldX - this.worldY) * (32 / 2) - centerX;
         const desiredCY = (this.worldX + this.worldY) * (16 / 2) - centerY;

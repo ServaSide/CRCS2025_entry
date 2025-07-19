@@ -28,8 +28,8 @@ class Game {
     mouseup(e) { this.mouse.btn = -1; } 
     mousemove(e) { this.mouse.x = e.pageX/2; this.mouse.y = e.pageY/2; } 
 
-    keydown(e) { this.keys[e.key] = true; }
-    keyup(e) { this.keys[e.key] = false; }
+    keydown(e) { this.keys[e.key.toLowerCase()] = true; }
+    keyup(e) { this.keys[e.key.toLowerCase()] = false; }
 
     loop() {
         this.dt = (performance.now() - this.lf) / 1000.0;
@@ -49,7 +49,7 @@ class Game {
     }
 
     render() {
-        this.world.render(this.mouse);
+        this.world.render(this.dt);
     }
 }
 
